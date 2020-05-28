@@ -13,7 +13,6 @@
         name: "control",
         methods: {
           doCmd(cmd){
-            console.log(cmd);
             let objOptions = {};
             objOptions.url = '/cmd';
             objOptions.action = '发送命令';

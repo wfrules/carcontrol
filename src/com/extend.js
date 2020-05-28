@@ -21,7 +21,7 @@ let request = function(opt) {
   params.append('api_token', this.$store.state.token);
   axios.post( opt.url.toLowerCase(), params).then( res=>{
       this.$vux.loading.hide();
-      if (res.data.status == 0) {
+      if (res.data.result == 0) {
         opt.func(res.data);
       }
       else {
@@ -54,11 +54,6 @@ let request = function(opt) {
     });   
   });
 };
-//根据编码判断是否有某权限
-let checkGrant = function(gCode)
-{
-    return this.$store.state.profile.grants.hasOwnProperty(gCode); //权限处理
-}
 
 export {
     request,

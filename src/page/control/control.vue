@@ -1,10 +1,10 @@
 <template>
     <div>
         遥控器
-        <button @click="doCmd('u')">u</button>
-        <button @click="doCmd('d')">D</button>
-        <button @click="doCmd('l')">L</button>
-        <button @click="doCmd('r')">R</button>
+        <button @click="doCmd('U')">U</button>
+        <button @click="doCmd('D')">D</button>
+        <button @click="doCmd('L')">L</button>
+        <button @click="doCmd('R')">R</button>
     </div>    
 </template>
 

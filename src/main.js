@@ -71,6 +71,8 @@ router.beforeEach(function(to, from, next){
             let objGetConfig = axios.get(sConfigUrl, {}).then(res => {
                     let objConfig = res.data;
                     objConfig.inited = true;
+                    objConfig.apiDomain = objConfig.apiDomain.replace('@', document.domain);
+                    // objConfig.wsDomain = objConfig.wsDomain.replace('@', document.domain);                
                     store.dispatch(types.SET_CONFIG, objConfig);
                     axios.defaults.baseURL = objConfig.protocol + '://' + objConfig.apiDomain;
                     routerDeal(to, from, next);

@@ -8,21 +8,6 @@
     import * as types from "@/store/mutation-types";
     export default {
         name: 'App',
-        created() {
-            let objSelf = this;
-            window.onload = function () {
-                MIDI.loadPlugin({
-                    soundfontUrl: "./static/soundfont/",
-                    instruments: ['acoustic_guitar_nylon', 'acoustic_grand_piano'],
-                    onprogress: function (state, progress) {
-//                console.log(state, progress);
-                    },
-                    onsuccess: function () {
-                        objSelf.$store.dispatch(types.SET_LIBLOADED, true);
-                    }
-                });
-            };
-        },
         methods: {
 
         },

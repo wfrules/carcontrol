@@ -6,8 +6,6 @@ Vue.use(Router)
 
 const Login = r => require.ensure([], () => r(require('@/page/control/control.vue')), 'login')//登入
 const Setting = r => require.ensure([], () => r(require('@/page/setting.vue')), 'setting')//设置
-const Stat = r => require.ensure([], () => r(require('@/page/stat/stat.vue')), 'stat')//统计
-const Chart = r => require.ensure([], () => r(require('@/page/chart/chart.vue')), 'chart')//图表
 
 export default new Router({
   routes: [

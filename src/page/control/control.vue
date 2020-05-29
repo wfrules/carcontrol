@@ -6,11 +6,19 @@
         {{joystick.angle.degree}}
         方向
         {{direction}}
-        <button @click="doCmd('U')">U</button>
-        <button @click="doCmd('D')">D</button>
-        <button @click="doCmd('L')">L</button>
-        <button @click="doCmd('R')">R</button>
-
+        Keep
+        {{car.keep}}
+        <div>
+            <button @click="doCmd('U')">U</button>
+            <button @click="doCmd('D')">D</button>
+            <button @click="doCmd('L')">L</button>
+            <button @click="doCmd('R')">R</button>
+        </div>
+        <div>
+            <button @click="doCmd('S')">S</button>
+            <button v-if="!car.keep" @click="doCmd('KT')">KT</button>
+            <button v-if="car.keep" @click="doCmd('KF')">KF</button>
+        </div>
         <div class="joystick_area" ref="joystick" :style="joyStyle">
            
         </div>
@@ -25,6 +33,7 @@
         name: "control",
         data() {
             return {
+                car: {keep: false},
                 busy: false,
                 now: moment().format('YYYY-MM-DD HH:mm:ss'),
                 timerCheck: 0,
@@ -110,7 +119,9 @@
             objOptions.json = {cmd};
             objOptions.func = (json) => {
                 this.busy = false;
-                console.log(json);
+                this.car = json.car;
+                // let objProp = JSON.eval(json.message);
+                // console.log(objProp);
             }
             this.request(objOptions);
           }

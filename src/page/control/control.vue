@@ -15,6 +15,12 @@
             <button @click="doCmd('R')">R</button>
         </div>
         <div>
+            pwma
+            <input type='number' min=1 max=10 v-model='pwma' @change='syncCar'/>
+            pwmb
+            <input type='number' min=1 max=10 v-model='pwmb' @change='syncCar'/>
+        </div>    
+        <div>
             <button @click="doCmd('S')">S</button>
             <button v-if="!car.keep" @click="doCmd('KT')">KT</button>
             <button v-if="car.keep" @click="doCmd('KF')">KF</button>
@@ -33,7 +39,9 @@
         name: "control",
         data() {
             return {
-                car: {keep: false},
+                pwma: 10,
+                pwmb: 10,
+                car: {keep: false, pwma: 10, pwmb:　10},
                 busy: false,
                 now: moment().format('YYYY-MM-DD HH:mm:ss'),
                 timerCheck: 0,
@@ -96,7 +104,30 @@
                 });
 
         },         
-        methods: {   
+        methods: { 
+          syncCar(){
+            if (this.busy)
+            {
+                return;
+            }
+            this.busy = true;
+            let objOptions = {};
+            objOptions.url = '/sync';
+            objOptions.action = '同步参数';
+            objOptions.json = {car: {
+               keep: false, pwma: this.pwma*100, pwmb:　this.pwmb*100
+            }};
+            objOptions.func = (json) => {
+                this.busy = false;
+                this.car = json.car;
+                this.syncParams();
+            }
+            this.request(objOptions);
+          },
+          syncParams(){
+                this.pwma = this.car.ena/ 100;
+                this.pwmb = this.car.enb/ 100;
+          },   
           getEmptyStick() {
                 return {
                     touching: false,
@@ -120,8 +151,7 @@
             objOptions.func = (json) => {
                 this.busy = false;
                 this.car = json.car;
-                // let objProp = JSON.eval(json.message);
-                // console.log(objProp);
+                this.syncParams();
             }
             this.request(objOptions);
           }

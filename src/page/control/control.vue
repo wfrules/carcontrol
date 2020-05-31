@@ -68,7 +68,7 @@
             return {
                 pwma: 10,
                 pwmb: 10,
-                car: {keep: false, pwma: 10, pwmb:　10},
+                car: {keep: false, pwma: 10, pwmb:　10, distance: 0},
                 busy: false,
                 now: moment().format('YYYY-MM-DD HH:mm:ss'),
                 timerCheck: 0,
@@ -82,7 +82,14 @@
                 objSelf.now = moment().format('YYYY-MM-DD HH:mm:ss');
                 objSelf.timerCheck = setTimeout(poll, 1000);
                 if (objSelf.joystick.touching && objSelf.joystick.distance >= TouchLimit) {
-                    objSelf.doCmd(objSelf.direction)
+                    if (objSelf.car.keep)
+                    {
+                        console.log('ss');    
+                    }
+                    else 
+                    {
+                        objSelf.doCmd(objSelf.direction)
+                    }
                 }
             })();            
         },      

@@ -1,30 +1,56 @@
 <template>
     <div>
-        距离
-        {{joystick.distance}}
-        角度
-        {{joystick.angle.degree}}
-        方向
-        {{direction}}
-        Keep
-        {{car.keep}}
-        <div>
-            <button @click="doCmd('U')">U</button>
-            <button @click="doCmd('D')">D</button>
-            <button @click="doCmd('L')">L</button>
-            <button @click="doCmd('R')">R</button>
-        </div>
-        <div>
+        <flexbox>
+            <flexbox-item>
             pwma
-            <input type='number' min=1 max=10 v-model='pwma' @change='syncCar'/>
+            <input class='pwm' type='number' min=1 max=10 v-model='pwma' @change='syncCar'/>
+            </flexbox-item>
+            <flexbox-item>
             pwmb
-            <input type='number' min=1 max=10 v-model='pwmb' @change='syncCar'/>
-        </div>    
-        <div>
-            <button @click="doCmd('S')">S</button>
-            <button v-if="!car.keep" @click="doCmd('KT')">KT</button>
-            <button v-if="car.keep" @click="doCmd('KF')">KF</button>
-        </div>
+            <input class='pwm' type='number' min=1 max=10 v-model='pwmb' @change='syncCar'/>
+            </flexbox-item>            
+        </flexbox>          
+        <flexbox>
+            <flexbox-item>
+                <button @click="doCmd('U')">U</button>
+            </flexbox-item>
+            <flexbox-item>
+                 <button @click="doCmd('D')">D</button>
+            </flexbox-item>
+            <flexbox-item>
+                <button @click="doCmd('L')">L</button>
+            </flexbox-item>
+            <flexbox-item>
+                <button @click="doCmd('R')">R</button>
+            </flexbox-item>
+            <flexbox-item>
+                <button @click="doCmd('S')">S</button>
+            </flexbox-item>
+            <flexbox-item v-if="!car.keep">
+                <button @click="doCmd('KT')">KT</button>
+            </flexbox-item>
+            <flexbox-item v-if="car.keep">
+                <button @click="doCmd('KF')">KF</button>
+            </flexbox-item>
+        </flexbox> 
+        <flexbox>  
+            <flexbox-item>  
+                距离
+                {{joystick.distance}}
+            </flexbox-item>
+            <flexbox-item>
+                角度
+                {{joystick.angle.degree}}
+            </flexbox-item>    
+            <flexbox-item>
+                方向
+                {{direction}}
+            </flexbox-item>    
+            <flexbox-item>
+                Keep
+                {{car.keep}}
+            </flexbox-item>    
+        </flexbox>           
         <div class="joystick_area" ref="joystick" :style="joyStyle">
            
         </div>
@@ -33,7 +59,8 @@
 </template>
 
 <script>
-    let moment = require('moment');    
+    let moment = require('moment');   
+    import {Flexbox, FlexboxItem} from 'vux' 
     const TouchLimit = 50;//圆周半径
     export default {
         name: "control",
@@ -78,7 +105,7 @@
                         break;
                     case 'end':
                         if (objSelf.joystick.touching) {
-                            
+                            objSelf.doCmd("S");
                         }
                         objSelf.joystick = objSelf.getEmptyStick();
                         break;
@@ -156,6 +183,7 @@
             this.request(objOptions);
           }
         },
+        components: {Flexbox, FlexboxItem},
         computed: {
             direction(){
                 let sRet = ''
@@ -191,5 +219,7 @@
 </script>
 
 <style scoped>
-
+    .pwm{
+      
+    }
 </style>
